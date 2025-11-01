@@ -1,0 +1,337 @@
+Turbo Assembler	 Version 4.1	    13/01/01 02:24:07	    Page 1
+D:\20241116\test1.asm
+
+
+
+      1	0000			     _STACK SEGMENT STACK
+      2	0000  64*(??)			 DB 100	DUP(?)
+      3	0064			     _STACK ENDS
+      4
+      5	0000			     _DATA SEGMENT WORD	PUBLIC 'DATA'
+      6	0000  50 4C 45 41 53 45	20+	 MSG1 DB 'PLEASE INPUT YOUR ID:$'
+      7	      49 4E 50 55 54 20	59+
+      8	      4F 55 52 20 49 44	3A+
+      9	      24
+     10	0016  32 33 30 30 39 32	30+	 MSG2 DB '23009201050$'
+     11	      31 30 35 30 24
+     12	0022  50 4C 45 41 53 45	20+	 MSG3 DB 'PLEASE INPUT YOUR NAME:$'
+     13	      49 4E 50 55 54 20	59+
+     14	      4F 55 52 20 4E 41	4D+
+     15	      45 3A 24
+     16	003A  57 61 6E 67 7A 68	61+	 MSG4 DB 'Wangzhaohan$'
+     17	      6F 68 61 6E 24
+     18	0046  50 4C 45 41 53 45	20+	 MSG5 DB 'PLEASE SHOW YOUR GIVEN STRING	IN ASCII:$'
+     19	      53 48 4F 57 20 59	4F+
+     20	      55 52 20 47 49 56	45+
+     21	      4E 20 53 54 52 49	4E+
+     22	      47 20 49 4E 20 41	53+
+     23	      43 49 49 3A 24
+     24	006E  43 61 6D 65 6C 6C	69+	 MSG6 DB 'Camellia$'
+     25	      61 24
+     26	0077  50 4C 45 41 53 45	20+	 MSG7 DB 'PLEASE INPUT A CHAR:$'
+     27	      49 4E 50 55 54 20	41+
+     28	      20 43 48 41 52 3A	24
+     29	008C  41 53 43 49 49 3A	24	 MSG8 DB 'ASCII:$'
+     30	0093  54 48 45 20 4F 52	49+	 MSG9 DB 'THE ORIGINAL SRING IS:$'
+     31	      47 49 4E 41 4C 20	53+
+     32	      52 49 4E 47 20 49	53+
+     33	      3A 24
+     34	00AA  24			 BUFFER	DB '$'
+     35	00AB			     _DATA ENDS
+     36
+     37	0000			     CODE SEGMENT PARA 'CODE'
+     38				     ASSUME DS:_DATA,SS:_STACK,CS:CODE
+     39	0000			     START:
+     40	0000  B8 0000s			 MOV AX,_DATA
+     41	0003  8E D8			 MOV DS,AX
+     42	0005  8E C0			 MOV ES,AX;不知道这个有什么用
+     43
+     44					 ;显示自己的学号
+     45	0007  B4 09			 MOV AH,09H
+     46	0009  BA 0000r			 MOV DX,OFFSET MSG1
+     47	000C  CD 21			 INT 21H
+     48
+     49	000E  B4 09			 MOV AH,09H
+     50	0010  BA 0016r			 MOV DX,OFFSET MSG2
+     51	0013  CD 21			 INT 21H
+     52
+     53					 ;回车换行
+     54	0015  B2 0D			 MOV DL,0DH
+     55	0017  B4 02			 MOV AH,02H
+     56	0019  CD 21			 INT 21H
+     57	001B  B2 0A			 MOV DL,0AH
+Turbo Assembler	 Version 4.1	    13/01/01 02:24:07	    Page 2
+D:\20241116\test1.asm
+
+
+
+     58	001D  B4 02			 MOV AH,02H
+     59	001F  CD 21			 INT 21H
+     60
+     61					 ;显示自己的姓名
+     62	0021  B4 09			 MOV AH,09H
+     63	0023  BA 0022r			 MOV DX,OFFSET MSG3
+     64	0026  CD 21			 INT 21H
+     65
+     66	0028  B4 09			 MOV AH,09H
+     67	002A  BA 003Ar			 MOV DX,OFFSET MSG4
+     68	002D  CD 21			 INT 21H
+     69
+     70					 ;将指定数据区的字符串数据以ASCII码形式显示在屏幕上
+     71					 ;回车换行
+     72	002F  B2 0D			 MOV DL,0DH
+     73	0031  B4 02			 MOV AH,02H
+     74	0033  CD 21			 INT 21H
+     75	0035  B2 0A			 MOV DL,0AH
+     76	0037  B4 02			 MOV AH,02H
+     77	0039  CD 21			 INT 21H
+     78
+     79	003B  B4 09			 MOV AH,09H
+     80	003D  BA 0046r			 MOV DX,OFFSET MSG5
+     81	0040  CD 21			 INT 21H
+     82
+     83					 ;回车换行
+     84	0042  B2 0D			 MOV DL,0DH
+     85	0044  B4 02			 MOV AH,02H
+     86	0046  CD 21			 INT 21H
+     87	0048  B2 0A			 MOV DL,0AH
+     88	004A  B4 02			 MOV AH,02H
+     89	004C  CD 21			 INT 21H
+     90
+     91	004E  B4 09			 MOV AH,09H
+     92	0050  BA 0093r			 MOV DX,OFFSET MSG9
+     93	0053  CD 21			 INT 21H
+     94
+     95
+     96	0055  B4 09			 MOV AH,09H
+     97	0057  BA 006Er			 MOV DX,OFFSET MSG6
+     98	005A  CD 21			 INT 21H
+     99
+    100					 ;回车换行
+    101	005C  B2 0D			 MOV DL,0DH
+    102	005E  B4 02			 MOV AH,02H
+    103	0060  CD 21			 INT 21H
+    104	0062  B2 0A			 MOV DL,0AH
+    105	0064  B4 02			 MOV AH,02H
+    106	0066  CD 21			 INT 21H
+    107
+    108	0068  B4 09			 MOV AH,09H
+    109	006A  BA 008Cr			 MOV DX,OFFSET MSG8
+    110	006D  CD 21			 INT 21H
+    111
+    112	006F  BE 006Er			 MOV SI,OFFSET MSG6
+    113	0072			     PRINT_STRING:
+    114	0072  8A 04			 MOV AL,[SI]
+Turbo Assembler	 Version 4.1	    13/01/01 02:24:07	    Page 3
+D:\20241116\test1.asm
+
+
+
+    115	0074  3C 24			 CMP AL,'$'
+    116	0076  74 44			 JE PRINT_CHAR
+    117
+    118	0078  8A D8			 MOV BL,AL
+    119	007A  8A F8			 MOV BH,AL
+    120
+    121	007C  46			 INC SI
+    122
+    123	007D  80 E3 F0			 AND BL,0F0H  ;取高4位
+    124	0080  B1 04			 MOV CL,4
+    125					 ;右移4位
+    126	0082  D2 EB			 SHR BL,CL
+    127	0084  80 FB 09			 CMP BL,9
+    128					 ;比9大就是字符，跳转到CHAR1
+    129	0087  77 0C			 JA CHAR1_1
+    130	0089			     NUM1_1:
+    131					 ;高4位数字转换为ASCII码
+    132	0089  80 C3 30			 ADD BL,30H
+    133	008C  8A D3			 MOV DL,BL
+    134	008E  B4 02			 MOV AH,02H
+    135	0090  CD 21			 INT 21H
+    136	0092  EB 0A 90			 JMP LOW4_1
+    137	0095			     CHAR1_1:
+    138					 ;高4位字符数字转换为ASCII码
+    139	0095  80 C3 37			 ADD BL,37H
+    140	0098  8A D3			 MOV DL,BL
+    141	009A  B4 02			 MOV AH,02H
+    142	009C  CD 21			 INT 21H
+    143	009E			     LOW4_1:
+    144					 ;取低4位
+    145	009E  80 E7 0F			 AND BH,0FH
+    146	00A1  80 FF 09			 CMP BH,9
+    147					 ;比9大就是字符，跳转到CHAR2
+    148	00A4  77 0B			 JA CHAR2_1
+    149	00A6			     NUM2_1:
+    150					 ;低4位数字转换为ASCII码
+    151	00A6  80 C7 30			 ADD BH,30H
+    152	00A9  8A D7			 MOV DL,BH
+    153	00AB  B4 02			 MOV AH,02H
+    154	00AD  CD 21			 INT 21H
+    155	00AF  EB C1			 JMP PRINT_STRING ;循环判断
+    156	00B1			     CHAR2_1:
+    157	00B1  80 C7 37			 ADD BH,37H
+    158	00B4  8A D7			 MOV DL,BH
+    159	00B6  B4 02			 MOV AH,02H
+    160	00B8  CD 21			 INT 21H
+    161	00BA  EB B6			 JMP PRINT_STRING ;循环判断
+    162
+    163					 ;循环从键盘读入字符并回显在屏幕上，并显示出对应字符的ASCII，直到输入'Q'或'q'时结束
+    164
+    165
+    166
+    167
+    168	00BC			     PRINT_CHAR:
+    169					 ;回车换行
+    170	00BC  B2 0D			 MOV DL,0DH
+    171	00BE  B4 02			 MOV AH,02H
+Turbo Assembler	 Version 4.1	    13/01/01 02:24:07	    Page 4
+D:\20241116\test1.asm
+
+
+
+    172	00C0  CD 21			 INT 21H
+    173	00C2  B2 0A			 MOV DL,0AH
+    174	00C4  B4 02			 MOV AH,02H
+    175	00C6  CD 21			 INT 21H
+    176
+    177					 ;显示提示输入字符串
+    178	00C8  B4 09			 MOV AH,09H
+    179	00CA  BA 0077r			 MOV DX,OFFSET MSG7
+    180	00CD  CD 21			 INT 21H
+    181
+    182					 ;输入一个字符并回显
+    183	00CF  B4 01			 MOV AH,01H
+    184	00D1  B0 00			 MOV AL,00H
+    185	00D3  CD 21			 INT 21H
+    186
+    187
+    188	00D5  3C 71			 CMP AL,'q'
+    189					 ;若等于q，则跳转到ENDING
+    190	00D7  74 5A			 JE ENDING
+    191					 ;若等于Q，则跳转到ENDING
+    192	00D9  3C 51			 CMP AL,'Q'
+    193	00DB  74 56			 JE ENDING
+    194
+    195
+    196					 ;低8位BL
+    197	00DD  8A D8			 MOV BL,AL
+    198					 ;高8位BH
+    199	00DF  8A F8			 MOV BH,AL
+    200
+    201					 ;回车换行
+    202	00E1  B2 0D			 MOV DL,0DH
+    203	00E3  B4 02			 MOV AH,02H
+    204	00E5  CD 21			 INT 21H
+    205	00E7  B2 0A			 MOV DL,0AH
+    206	00E9  B4 02			 MOV AH,02H
+    207	00EB  CD 21			 INT 21H
+    208
+    209	00ED  B4 09			 MOV AH,09H
+    210	00EF  BA 008Cr			 MOV DX,OFFSET MSG8
+    211	00F2  CD 21			 INT 21H
+    212
+    213	00F4  80 E3 F0			 AND BL,0F0H  ;取高4位
+    214	00F7  B1 04			 MOV CL,4
+    215					 ;右移4位
+    216	00F9  D2 EB			 SHR BL,CL
+    217	00FB  80 FB 09			 CMP BL,9
+    218					 ;比9大就是字符，跳转到CHAR1
+    219	00FE  77 0C			 JA CHAR1_2
+    220	0100			     NUM1_2:
+    221					 ;高4位数字转换为ASCII码
+    222	0100  80 C3 30			 ADD BL,30H
+    223	0103  8A D3			 MOV DL,BL
+    224	0105  B4 02			 MOV AH,02H
+    225	0107  CD 21			 INT 21H
+    226	0109  EB 0A 90			 JMP LOW4_2
+    227	010C			     CHAR1_2:
+    228					 ;高4位字符数字转换为ASCII码
+Turbo Assembler	 Version 4.1	    13/01/01 02:24:07	    Page 5
+D:\20241116\test1.asm
+
+
+
+    229	010C  80 C3 37			 ADD BL,37H
+    230	010F  8A D3			 MOV DL,BL
+    231	0111  B4 02			 MOV AH,02H
+    232	0113  CD 21			 INT 21H
+    233	0115			     LOW4_2:
+    234					 ;取低4位
+    235	0115  80 E7 0F			 AND BH,0FH
+    236	0118  80 FF 09			 CMP BH,9
+    237					 ;比9大就是字符，跳转到CHAR2
+    238	011B  77 0B			 JA CHAR2_2
+    239	011D			     NUM2_2:
+    240					 ;低4位数字转换为ASCII码
+    241	011D  80 C7 30			 ADD BH,30H
+    242	0120  8A D7			 MOV DL,BH
+    243	0122  B4 02			 MOV AH,02H
+    244	0124  CD 21			 INT 21H
+    245	0126  EB 94			 JMP PRINT_CHAR	;循环判断
+    246	0128			     CHAR2_2:
+    247	0128  80 C7 37			 ADD BH,37H
+    248	012B  8A D7			 MOV DL,BH
+    249	012D  B4 02			 MOV AH,02H
+    250	012F  CD 21			 INT 21H
+    251	0131  EB 89			 JMP PRINT_CHAR	;循环判断
+    252
+    253	0133			     ENDING:
+    254					 ;回车换行
+    255	0133  B2 0D			 MOV DL,0DH
+    256	0135  B4 02			 MOV AH,02H
+    257	0137  CD 21			 INT 21H
+    258	0139  B2 0A			 MOV DL,0AH
+    259	013B  B4 02			 MOV AH,02H
+    260	013D  CD 21			 INT 21H
+    261
+    262	013F  B8 4C00			 MOV AX,4C00H
+    263	0142  CD 21			 INT 21H
+    264	0144			     CODE ENDS
+    265				     END START
+Turbo Assembler	 Version 4.1	    13/01/01 02:24:07	    Page 6
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "13/01/01"
+??FILENAME			  Text	 "test1	  "
+??TIME				  Text	 "02:24:07"
+??VERSION			  Number 040A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 TEST1
+@WORDSIZE			  Text	 2
+BUFFER				  Byte	 _DATA:00AA
+CHAR1_1				  Near	 CODE:0095
+CHAR1_2				  Near	 CODE:010C
+CHAR2_1				  Near	 CODE:00B1
+CHAR2_2				  Near	 CODE:0128
+ENDING				  Near	 CODE:0133
+LOW4_1				  Near	 CODE:009E
+LOW4_2				  Near	 CODE:0115
+MSG1				  Byte	 _DATA:0000
+MSG2				  Byte	 _DATA:0016
+MSG3				  Byte	 _DATA:0022
+MSG4				  Byte	 _DATA:003A
+MSG5				  Byte	 _DATA:0046
+MSG6				  Byte	 _DATA:006E
+MSG7				  Byte	 _DATA:0077
+MSG8				  Byte	 _DATA:008C
+MSG9				  Byte	 _DATA:0093
+NUM1_1				  Near	 CODE:0089
+NUM1_2				  Near	 CODE:0100
+NUM2_1				  Near	 CODE:00A6
+NUM2_2				  Near	 CODE:011D
+PRINT_CHAR			  Near	 CODE:00BC
+PRINT_STRING			  Near	 CODE:0072
+START				  Near	 CODE:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0144 Para	  none	  CODE
+_DATA				  16  00AB Word	  Public  DATA
+_STACK				  16  0064 Para	  Stack
+
